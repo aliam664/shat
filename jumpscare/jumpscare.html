@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#ffb7d5">
+<title>🎀 یه هدیه‌ی کوچولوی کیوت برات 🎀</title>
+<style>
+  :root{
+    --pink:#ff9ec7; --pink2:#ffd0e6; --pink3:#fff3f9; --ink:#8a3d64;
+    --safe-t: env(safe-area-inset-top, 0px);
+    --safe-b: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html,body{height:100%;margin:0;overflow:hidden}
+  body{
+    font-family: "Vazirmatn","Sahel","IRANSans",Tahoma,"Segoe UI",system-ui,-apple-system,sans-serif;
+    background:#000; color:var(--ink); user-select:none;
+    position:fixed; inset:0; overscroll-behavior:none;
+  }
+
+  /* ================= SHELL ================= */
+  #world{
+    position:fixed; inset:0; transform-origin:50% 50%; will-change:transform,filter;
+    backface-visibility:hidden; z-index:2;
+  }
+  .screen{
+    position:absolute; inset:0; display:none; flex-direction:column; align-items:center;
+    justify-content:center; padding:calc(22px + var(--safe-t)) 18px calc(22px + var(--safe-b));
+    text-align:center; overflow:hidden;
+  }
+  .screen.active{display:flex}
+
+  /* ================= CUTE WORLD ================= */
+  #screen-cute{
+    background:
+      radial-gradient(circle at 15% 12%, #fff 0%, transparent 42%),
+      radial-gradient(circle at 85% 78%, #ffe6f3 0%, transparent 45%),
+      linear-gradient(160deg,#ffd9ec 0%, #ffc3e0 35%, #ffb3d8 60%, #ffd9ec 100%);
+    background-size:auto,auto,300% 300%;
+    animation: gradientMove 14s ease-in-out infinite;
+  }
+  @keyframes gradientMove{
+    0%,100%{background-position:0 0,0 0,0% 50%}
+    50%{background-position:0 0,0 0,100% 50%}
+  }
+  .floater{position:absolute; bottom:-12vh; font-size:28px; opacity:.75; animation: floatUp linear infinite; pointer-events:none; filter:drop-shadow(0 4px 6px rgba(255,110,170,.35))}
+  @keyframes floatUp{
+    0%{transform:translateY(0) rotate(0deg) scale(.7); opacity:0}
+    10%{opacity:.9}
+    100%{transform:translateY(-125vh) rotate(380deg) scale(1.15); opacity:0}
+  }
+  .sparkle{position:absolute; font-size:16px; opacity:.9; animation: twinkle 2.4s ease-in-out infinite; pointer-events:none}
+  @keyframes twinkle{0%,100%{transform:scale(.6);opacity:.25}50%{transform:scale(1.25);opacity:1}}
+
+  .card{
+    position:relative; z-index:5; width:min(560px, 94vw);
+    background:rgba(255,255,255,.72); backdrop-filter: blur(8px) saturate(1.3);
+    border:3px dashed #ffb0d3; border-radius:30px; padding:26px 20px 22px;
+    box-shadow:0 22px 50px rgba(214,71,138,.28), inset 0 0 0 8px rgba(255,255,255,.5);
+    animation: cardIn .8s cubic-bezier(.18,.89,.32,1.28) both;
+  }
+  @keyframes cardIn{from{transform:translateY(26px) scale(.9); opacity:0} to{transform:none;opacity:1}}
+  .bow{font-size:56px; line-height:1; display:inline-block; animation: bob 2.2s ease-in-out infinite; filter:drop-shadow(0 8px 10px rgba(226,84,148,.35))}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-12px) rotate(6deg)}}
+  h1{margin:6px 0 4px; font-size:clamp(22px,6.4vw,32px); color:#e0468b; text-shadow:0 2px 0 #fff}
+  .sub{margin:0 0 16px; font-size:clamp(13px,3.9vw,16px); color:#a8557f; line-height:1.9}
+
+  .row{display:flex; gap:8px; width:100%; align-items:stretch; justify-content:center; flex-wrap:wrap}
+  input[type=password], input[type=text]{
+    flex:1 1 190px; min-width:0; padding:15px 16px; font-size:16px; font-family:inherit;
+    border:3px solid #ffbcd9; border-radius:20px; background:#fff; color:#a03c6d; outline:none;
+    box-shadow:inset 0 2px 6px rgba(224,84,150,.12); transition:.2s; text-align:center;
+  }
+  input:focus{border-color:#ff7ab8; box-shadow:0 0 0 5px rgba(255,140,190,.28)}
+  button{
+    font-family:inherit; font-weight:800; cursor:pointer; border:none; border-radius:20px;
+    padding:15px 22px; font-size:16px; color:#fff; background:linear-gradient(180deg,#ff8dc0,#f0579e);
+    box-shadow:0 8px 0 #d3407f, 0 12px 22px rgba(211,64,127,.4); transition:transform .09s, box-shadow .09s;
+    touch-action:manipulation;
+  }
+  button:active{transform:translateY(5px); box-shadow:0 3px 0 #d3407f, 0 6px 12px rgba(211,64,127,.35)}
+  button.ghost{background:linear-gradient(180deg,#fff,#ffe8f3); color:#e0468b; box-shadow:0 8px 0 #ffc9df, 0 12px 20px rgba(211,64,127,.22)}
+  button.ghost:active{box-shadow:0 3px 0 #ffc9df}
+  button.tiny{padding:10px 14px; font-size:14px; border-radius:16px}
+
+  .hint{margin-top:14px; font-size:12.5px; color:#b76a92; line-height:2}
+  .pill{display:inline-block; background:#fff0f7; border:2px solid #ffcfe4; border-radius:999px; padding:5px 12px; margin:3px; font-size:12.5px; color:#c4538b}
+  .toast{
+    position:fixed; inset-inline:0; bottom:calc(18px + var(--safe-b)); margin:auto; width:max-content; max-width:90vw; z-index:50;
+    background:#fff; color:#d3407f; border:3px solid #ffb6d5; border-radius:18px; padding:12px 18px; font-weight:700;
+    box-shadow:0 14px 30px rgba(200,60,120,.3); animation: toastIn .35s ease both;
+  }
+  @keyframes toastIn{from{transform:translateY(20px) scale(.9);opacity:0}to{transform:none;opacity:1}}
+  .shakey{animation: shakey .4s ease both}
+  @keyframes shakey{0%,100%{transform:none}25%{transform:translateX(-7px) rotate(-1.2deg)}75%{transform:translateX(7px) rotate(1.2deg)}}
+
+  /* ================= FAKE VOLUME HUD ================= */
+  #volHud{
+    position:fixed; top:calc(14px + var(--safe-t)); inset-inline-start:14px; z-index:120;
+    display:none; align-items:center; gap:10px; padding:10px 14px; border-radius:999px;
+    background:rgba(20,20,26,.82); color:#fff; font-family:Tahoma,system-ui,sans-serif;
+    box-shadow:0 10px 30px rgba(0,0,0,.45); backdrop-filter:blur(6px); direction:ltr;
+    border:1px solid rgba(255,255,255,.14);
+  }
+  #volHud.on{display:flex}
+  #volHud .vbar{width:130px; height:10px; border-radius:999px; background:#3a3a46; overflow:hidden}
+  #volHud .vbar > i{display:block; height:100%; width:0%; background:linear-gradient(90deg,#7dd3fc,#f472b6)}
+  #volHud b{font-size:12.5px; min-width:44px; text-align:right}
+  #volHud.max{background:linear-gradient(90deg,#f0579e,#ff2d6f); box-shadow:0 0 26px rgba(255,45,111,.75)}
+
+  /* toggle switches */
+  .opts{display:flex; flex-direction:column; gap:10px; margin:16px auto 4px; width:100%; max-width:420px}
+  .opt{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff6fb; border:2px solid #ffd7ea; border-radius:18px; padding:9px 14px; font-size:13.5px; color:#a8557f; text-align:right}
+  .switch{position:relative; width:52px; height:30px; flex:0 0 52px}
+  .switch input{position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer}
+  .slider{position:absolute; inset:0; background:#ffd7ea; border-radius:999px; transition:.22s; pointer-events:none}
+  .slider::after{content:""; position:absolute; top:3px; right:3px; width:24px; height:24px; background:#fff; border-radius:50%; transition:.22s; box-shadow:0 2px 6px rgba(200,60,120,.35)}
+  .switch input:checked + .slider{background:linear-gradient(90deg,#ff7ab8,#f0579e)}
+  .switch input:checked + .slider::after{transform:translateX(-22px)}
+
+  /* ================= LOADING ================= */
+  #screen-load{background:linear-gradient(160deg,#ffe6f3,#ffd0e6 60%,#ffc0dd)}
+  .loader-wrap{width:min(520px,92vw); z-index:5}
+  .bar{height:26px; border-radius:999px; background:#fff; border:3px solid #ffbcd9; overflow:hidden; box-shadow:inset 0 3px 8px rgba(224,84,150,.14)}
+  .bar > i{display:block; height:100%; width:0%; background:linear-gradient(90deg,#ffb3d8,#ff6fb2); transition:width .35s ease}
+  .loadmsg{margin-top:14px; font-size:15px; color:#c4538b; min-height:26px; font-weight:700}
+  .wc{font-size:44px; animation:bob 1.8s ease-in-out infinite}
+
+  /* ================= SCARE ================= */
+  #scare{position:fixed; inset:0; z-index:100; display:none; background:#000; overflow:hidden}
+  #scare.on{display:block}
+  #face{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform-origin:50% 42%; will-change:transform,opacity,filter}
+  #flash{position:fixed; inset:0; z-index:110; background:#fff; opacity:0; pointer-events:none; mix-blend-mode:screen}
+  #redflash{position:fixed; inset:0; z-index:109; background:radial-gradient(circle at 50% 45%,#ff0000 0%,#5a0000 55%,#000 100%); opacity:0; pointer-events:none; mix-blend-mode:hard-light}
+  #vig{position:fixed; inset:0; z-index:105; pointer-events:none; opacity:0;
+    background:radial-gradient(circle at 50% 50%, transparent 28%, rgba(0,0,0,.85) 78%, #000 100%)}
+  #static{position:fixed; inset:0; z-index:104; pointer-events:none; opacity:0; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
+
+  /* ================= AFTERMATH ================= */
+  #screen-after{background:#0a0a0c; color:#e7e7ee}
+  .errdlg{
+    width:min(520px,92vw); background:#1c1c22; border:2px solid #34343e; border-radius:14px; overflow:hidden;
+    box-shadow:0 26px 60px rgba(0,0,0,.7); text-align:right; font-family:Tahoma,system-ui,sans-serif;
+  }
+  .errbar{display:flex; align-items:center; gap:10px; background:linear-gradient(180deg,#2b2b34,#22222a); padding:10px 12px; border-bottom:2px solid #34343e}
+  .errdot{width:12px;height:12px;border-radius:50%;background:#ff5f57}
+  .errbar b{flex:1; font-size:13px; color:#cfcfe0; font-weight:600}
+  #closeX{position:relative; width:34px; height:30px; border-radius:8px; background:#3a3a46; color:#fff; font-weight:900; padding:0; box-shadow:none; transition:transform .18s ease, left .18s ease, top .18s ease}
+  #closeX:active{transform:none}
+  .errbody{padding:18px; font-size:14px; line-height:2.1; color:#c9c9da}
+  .errbody code{background:#111; padding:2px 6px; border-radius:6px; color:#ff8dc0; direction:ltr; display:inline-block}
+  .endbtns{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px}
+  @media (prefers-reduced-motion: no-preference){}
+</style>
+</head>
+<body>
+
+<div id="world">
+
+  <!-- ===== 1) CUTE ===== -->
+  <section id="screen-cute" class="screen active">
+    <div class="card" id="cuteCard">
+      <div class="bow">🎀</div>
+      <h1>سلام! یه هدیه‌ی خیلی کیوت برات دارم</h1>
+      <p class="sub">
+        تو یه جعبه‌ی کوچولوی صورتی قایم شده 🎁<br>
+        ولی قفله! برای باز کردنش باید رمزش رو بدونی 🙈
+      </p>
+
+      <div class="row">
+        <input id="pw" type="password" placeholder="رمز رو اینجا بنویس..." autocomplete="off" spellcheck="false">
+        <button id="tryBtn">بازش کن 💖</button>
+      </div>
+
+      <div class="opts">
+        <div class="opt">
+          <span>🔊 <b>صدای این هدیه رو زیاد کن</b> (وگرنه چیزی نمی‌فهمی!)</span>
+          <label class="switch"><input id="optVolume" type="checkbox" checked><span class="slider"></span></label>
+        </div>
+        <div class="opt">
+          <span>😱 حالت خیلی وحشتناک‌تر (صدای بلندتر + لرزش بیشتر)</span>
+          <label class="switch"><input id="optExtra" type="checkbox"><span class="slider"></span></label>
+        </div>
+        <div class="opt">
+          <span>🔁 بعد از تموم شدن، خودش یه بار دیگه تکرار کنه</span>
+          <label class="switch"><input id="optLoop" type="checkbox"><span class="slider"></span></label>
+        </div>
+      </div>
+
+      <div class="hint">
+        <span class="pill">راهنمایی: رمز = تاریخ تولدِ خودت 🙈</span>
+        <span class="pill">پیشنهاد: صدا رو تا آخر ببر 🔊</span><br>
+        <button class="ghost tiny" id="forgotBtn" style="margin-top:10px">رمز رو یادم نیست 😭</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2) LOADING ===== -->
+  <section id="screen-load" class="screen">
+    <div class="loader-wrap">
+      <div class="wc">🎁</div>
+      <h1 style="color:#e0468b">در حال باز کردن جعبه‌ی کیوت...</h1>
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="loadmsg" id="loadMsg">یه لحظه صبر کن...</div>
+      <div class="hint" id="volHint">🔊 یادت نره صدا رو زیاد کنی!</div>
+    </div>
+  </section>
+
+  <!-- ===== 3) AFTERMATH ===== -->
+  <section id="screen-after" class="screen">
+    <div class="errdlg" id="errDlg">
+      <div class="errbar">
+        <span class="errdot"></span>
+        <b>System Message — خطای غیرمنتظره</b>
+        <button id="closeX">✕</button>
+      </div>
+      <div class="errbody">
+        <div><code>ERROR 0x666:</code> تلاش برای بستن این صفحه ناموفق بود.</div>
+        <div>یک موجود ناشناس کنترل این پنجره را در دست گرفته است… 😈</div>
+        <div id="errCount" style="margin-top:8px; color:#8f8fa6; font-size:12.5px"></div>
+      </div>
+    </div>
+
+    <div id="ending" style="display:none; z-index:6">
+      <div class="card" style="background:rgba(255,255,255,.94); border-color:#ffb0d3">
+        <div class="bow">😈</div>
+        <h1>خب… ترسیدی؟</h1>
+        <p class="sub">
+          امتیاز ترس تو: <b>۱۰۰٪</b> — قلبم داشت می‌ایستاد 💀<br>
+          این یک شوخی بود، چیزی اتفاق نیفتاده… یا شاید هم افتاده 🙃
+        </p>
+        <div class="endbtns">
+          <button id="againBtn">یه بار دیگه بترسونم 🔁</button>
+          <button class="ghost" id="enoughBtn">کافیه، بسه 😅</button>
+        </div>
+        <div class="hint" id="stats"></div>
+        <div class="endbtns">
+          <button class="ghost tiny" id="shareBtn">این صفحه رو برای یه دوست بفرست 😈</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== FAKE VOLUME HUD ===== -->
+<div id="volHud"><span>🔊</span><div class="vbar"><i id="vfill"></i></div><b id="vnum">0%</b></div>
+
+<!-- ===== SCARE LAYERS ===== -->
+<div id="scare">
+  <img id="face" alt="">
+</div>
+<div id="static"></div>
+<div id="vig"></div>
+<div id="redflash"></div>
+<div id="flash"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- تصاویر (توسط build جایگزین می‌شوند) ---------- */
+  const FACES = { f1: "assets/scare_face.jpg", f2: "assets/scare_face2.jpg" };
+
+  /* ---------- ابزارها ---------- */
+  const $ = (s)=>document.querySelector(s);
+  const rnd = (a,b)=>a + Math.random()*(b-a);
+  const clamp=(v,a,b)=>v<a?a:(v>b?b:v);
+  const screenEls = { cute:$('#screen-cute'), load:$('#screen-load'), after:$('#screen-after') };
+  function show(name){
+    Object.values(screenEls).forEach(s=>s.classList.remove('active'));
+    if(screenEls[name]) screenEls[name].classList.add('active');
+  }
+  function toast(txt, ms){
+    const old=document.querySelector('.toast'); if(old) old.remove();
+    const d=document.createElement('div'); d.className='toast'; d.textContent=txt;
+    document.body.appendChild(d);
+    setTimeout(()=>{ d.style.transition='.35s'; d.style.opacity='0'; d.style.transform='translateY(14px)'; setTimeout(()=>d.remove(),380); }, ms||2200);
+  }
+  function buzz(pattern){ try{ navigator.vibrate && navigator.vibrate(pattern); }catch(e){} }
+
+  /* ---------- صدا: زنجیره‌ی «بلندترین صدای ممکن» ---------- */
+  let ctx=null, bus=null, master=null, shaper=null, outGain=null, comp=null, noiseBuf=null, loudConfig=1;
+  function curve(amount){
+    const n=1024, c=new Float32Array(n);
+    for(let i=0;i<n;i++){
+      const x = i*2/n - 1;
+      c[i] = (1+amount) * x / (1 + amount*Math.abs(x));   // soft-clip -> بلندتر شنیده می‌شود
+    }
+    return c;
+  }
+  function audioInit(){
+    if(ctx) return ctx;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    ctx = new AC({ latencyHint:'interactive' });
+    bus = ctx.createGain(); bus.gain.value = 1.0;
+
+    comp = ctx.createDynamicsCompressor();               // فشرده‌سازی = صدای یکنواخت و بلندتر
+    comp.threshold.value = -3; comp.knee.value = 2; comp.ratio.value = 20;
+    comp.attack.value = 0.001; comp.release.value = 0.06;
+
+    shaper = ctx.createWaveShaper(); shaper.curve = curve(6); shaper.oversample = '4x';
+
+    outGain = ctx.createGain(); outGain.gain.value = 2.3; // هدفت: سقف بلندی
+    master  = ctx.createGain(); master.gain.value = 1.0;
+
+    bus.connect(comp); comp.connect(shaper); shaper.connect(outGain); outGain.connect(master); master.connect(ctx.destination);
+    return ctx;
+  }
+  function audioWake(){ try{ audioInit(); if(ctx.state!=='running') ctx.resume(); }catch(e){} }
+  function db(v){ outGain && (outGain.gain.value = v); }
+
+  function nb(){
+    if(noiseBuf) return noiseBuf;
+    const len = Math.floor(ctx.sampleRate*4), b = ctx.createBuffer(1,len,ctx.sampleRate), d=b.getChannelData(0);
+    for(let i=0;i<len;i++) d[i] = Math.random()*2-1;
+    noiseBuf=b; return b;
+  }
+  function noise(){ const s=ctx.createBufferSource(); s.buffer=nb(); s.loop=true; return s; }
+
+  /* --- افکت‌های صوتی --- */
+  function sfxImpact(t, o){
+    o=o||{};
+    const amp=(o.amp||1), dur=o.dur||1.1;
+    const s=ctx.createOscillator(); s.type='sine';
+    s.frequency.setValueAtTime((o.freq||95)*2.4, t);
+    s.frequency.exponentialRampToValueAtTime(26, t+dur);
+    const g=ctx.createGain();
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(amp, t+0.008);
+    g.gain.exponentialRampToValueAtTime(0.0006, t+dur);
+    s.connect(g); g.connect(bus); s.start(t); s.stop(t+dur+0.05);
+
+    const n=noise(), f=ctx.createBiquadFilter(); f.type='highpass'; f.frequency.value=900;
+    const ng=ctx.createGain();
+    ng.gain.setValueAtTime(amp*0.9,t); ng.gain.exponentialRampToValueAtTime(0.0015, t+0.32);
+    n.connect(f); f.connect(ng); ng.connect(bus); n.start(t); n.stop(t+0.4);
+  }
+  function sfxScream(t, dur, base){
+    dur=dur||1.5; base=base||520;
+    const o1=ctx.createOscillator(); o1.type='sawtooth';
+    const o2=ctx.createOscillator(); o2.type='square'; o2.detune.value=16;
+    const lfo=ctx.createOscillator(); lfo.type='sine'; lfo.frequency.value=26;
+    const lg=ctx.createGain(); lg.gain.value=210; lfo.connect(lg);
+    const f=ctx.createBiquadFilter(); f.type='lowpass'; f.frequency.value=4200; f.Q.value=7;
+    const g=ctx.createGain();
+    o1.frequency.setValueAtTime(base*2.35, t); o1.frequency.exponentialRampToValueAtTime(base*0.55, t+dur);
+    o2.frequency.setValueAtTime(base*1.55, t); o2.frequency.exponentialRampToValueAtTime(base*0.42, t+dur);
+    lg.connect(o1.frequency); lg.connect(o2.frequency);
+    o1.connect(f); o2.connect(f); f.connect(g); g.connect(bus);
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(1.0, t+0.012);
+    g.gain.setValueAtTime(1.0, t+dur*0.55);
+    g.gain.exponentialRampToValueAtTime(0.0008, t+dur);
+    o1.start(t); o2.start(t); lfo.start(t);
+    o1.stop(t+dur+0.06); o2.stop(t+dur+0.06); lfo.stop(t+dur+0.06);
+
+    // هارمونیک خش‌دار روی صدا
+    const o3=ctx.createOscillator(); o3.type='sawtooth';
+    o3.frequency.setValueAtTime(base*3.1,t); o3.frequency.exponentialRampToValueAtTime(base*0.9,t+dur);
+    const g3=ctx.createGain();
+    g3.gain.setValueAtTime(0.0001,t); g3.gain.exponentialRampToValueAtTime(0.5,t+0.02);
+    g3.gain.exponentialRampToValueAtTime(0.0007,t+dur*0.9);
+    const bp=ctx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=1800; bp.Q.value=1.1;
+    o3.connect(bp); bp.connect(g3); g3.connect(bus);
+    o3.start(t); o3.stop(t+dur+0.05);
+  }
+  function sfxScreech(t, dur){
+    dur=dur||1.1;
+    const ps=[1, 1.31, 1.87, 2.42];
+    ps.forEach((mul,i)=>{
+      const s=ctx.createOscillator(); s.type='sawtooth';
+      s.frequency.setValueAtTime(1900*mul, t);
+      s.frequency.linearRampToValueAtTime(760*mul, t+dur);
+      const f=ctx.createBiquadFilter(); f.type='highpass'; f.frequency.value=700; f.Q.value=3;
+      const g=ctx.createGain();
+      g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.34, t+0.03);
+      g.gain.exponentialRampToValueAtTime(0.0007, t+dur);
+      s.connect(f); f.connect(g); g.connect(bus); s.start(t); s.stop(t+dur+0.05);
+    });
+  }
+  function sfxGrowl(t, dur, base){
+    dur=dur||2.2; base=base||70;
+    const s=ctx.createOscillator(); s.type='sawtooth';
+    const lfo=ctx.createOscillator(); lfo.type='sine'; lfo.frequency.value=9.5;
+    const lg=ctx.createGain(); lg.gain.value=26; lfo.connect(lg); lg.connect(s.frequency);
+    s.frequency.setValueAtTime(base*1.4,t); s.frequency.linearRampToValueAtTime(base*0.72, t+dur);
+    const f=ctx.createBiquadFilter(); f.type='lowpass'; f.frequency.value=900; f.Q.value=5;
+    const g=ctx.createGain();
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(1.0,t+0.05);
+    g.gain.setValueAtTime(1.0, t+dur*0.6); g.gain.exponentialRampToValueAtTime(0.0008, t+dur);
+    s.connect(f); f.connect(g); g.connect(bus);
+    s.start(t); lfo.start(t); s.stop(t+dur+0.05); lfo.stop(t+dur+0.05);
+
+    const n=noise(), nf=ctx.createBiquadFilter(); nf.type='bandpass'; nf.frequency.value=420; nf.Q.value=0.9;
+    const ng=ctx.createGain();
+    ng.gain.setValueAtTime(0.0001,t); ng.gain.exponentialRampToValueAtTime(0.55,t+0.08);
+    ng.gain.exponentialRampToValueAtTime(0.0007, t+dur*0.85);
+    n.connect(nf); nf.connect(ng); ng.connect(bus); n.start(t); n.stop(t+dur+0.05);
+  }
+  function sfxWhisper(t, dur){
+    dur=dur||3.4;
+    const n=noise(), f=ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=1500; f.Q.value=2.4;
+    const lfo=ctx.createOscillator(); lfo.type='sine'; lfo.frequency.value=11;
+    const lg=ctx.createGain(); lg.gain.value=520; lfo.connect(lg); lg.connect(f.frequency);
+    const g=ctx.createGain();
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.2, t+0.4);
+    g.gain.exponentialRampToValueAtTime(0.0006, t+dur);
+    n.connect(f); f.connect(g); g.connect(bus);
+    n.start(t); lfo.start(t); n.stop(t+dur+0.05); lfo.stop(t+dur+0.05);
+  }
+  function sfxLaugh(t, n){
+    n=n||9;
+    for(let i=0;i<n;i++){
+      const t0=t+i*0.155, dur=0.14;
+      const s=ctx.createOscillator(); s.type='sawtooth';
+      const f0 = 430 - i*24;
+      s.frequency.setValueAtTime(f0, t0);
+      s.frequency.exponentialRampToValueAtTime(Math.max(70,f0*0.45), t0+dur);
+      const bp=ctx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=780; bp.Q.value=2.2;
+      const g=ctx.createGain();
+      g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(0.5,t0+0.012);
+      g.gain.exponentialRampToValueAtTime(0.0006, t0+dur);
+      s.connect(bp); bp.connect(g); g.connect(bus); s.start(t0); s.stop(t0+dur+0.02);
+    }
+  }
+  function sfxBeat(t, n, gap){
+    n=n||6; gap=gap||0.42;
+    for(let i=0;i<n;i++){
+      const t0=t+i*gap;
+      [[0,1],[0.16,0.66]].forEach(([off,amp])=>{
+        const s=ctx.createOscillator(); s.type='sine';
+        s.frequency.setValueAtTime(78,t0+off); s.frequency.exponentialRampToValueAtTime(38,t0+off+0.13);
+        const g=ctx.createGain();
+        g.gain.setValueAtTime(0.0001,t0+off); g.gain.exponentialRampToValueAtTime(amp,t0+off+0.008);
+        g.gain.exponentialRampToValueAtTime(0.0006,t0+off+0.2);
+        s.connect(g); g.connect(bus); s.start(t0+off); s.stop(t0+off+0.24);
+      });
+    }
+  }
+  function sfxBell(t){ // زنگ/تلقین پایانی
+    const parts=[1,2.02,2.98,4.1,5.4];
+    parts.forEach((m,i)=>{
+      const s=ctx.createOscillator(); s.type='sine'; s.frequency.value=98*m;
+      const g=ctx.createGain();
+      g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.5/(i+1.3), t+0.01);
+      g.gain.exponentialRampToValueAtTime(0.0006, t+3.4/(i*0.6+1));
+      s.connect(g); g.connect(bus); s.start(t); s.stop(t+3.6);
+    });
+  }
+
+  /* ---------- دنیای بینایی: لرزش، فلاش، چرخش ---------- */
+  const world = $('#world'), face = $('#face'), flash = $('#flash'), redflash=$('#redflash'),
+        vig=$('#vig'), staticEl=$('#static'), scareWrap=$('#scare');
+  let scareOn=false, shakeAmp=0, shakeEnd=0, strobeEnd=0, invertEnd=0,
+      spin={active:false,start:0,dur:0,turns:0}, zoom={v:1, to:1, speed:3},
+      t0=0, raf=null, extra=false, loopMode=false, victimNo=1, freeze=false;
+
+  function shake(amp, ms){ shakeAmp=Math.max(shakeAmp, amp); shakeEnd=Math.max(shakeEnd, performance.now()+ms); }
+  function strobe(ms){ strobeEnd=Math.max(strobeEnd, performance.now()+ms); }
+  function invert(ms){ invertEnd=Math.max(invertEnd, performance.now()+ms); }
+  function spinGo(dur, turns){ spin={active:true,start:performance.now(),dur:dur,turns:turns}; }
+  function zoomTo(v, speed){ zoom.to=v; zoom.speed=speed||3; }
+
+  function loop(now){
+    if(!scareOn){ raf=null; return; }
+    const t=(now-t0)/1000;
+
+    // لحظهٔ «سکوت مرگ‌آور»: همه‌چیز کاملاً سیاه و بی‌حرکت
+    if(freeze){
+      world.style.transform='none'; scareWrap.style.transform='none';
+      flash.style.opacity=0; redflash.style.opacity=0; vig.style.opacity=0; staticEl.style.opacity=0;
+      loop._last=now; raf=requestAnimationFrame(loop); return;
+    }
+
+    // لرزش دوربین
+    const s = now<shakeEnd ? shakeAmp*(1 - (now-(shakeEnd-Math.max(160,shakeAmp*14)))/Math.max(160,shakeAmp*14)) : 0;
+    const amp = clamp(s,0,600);
+    const dx = amp? rnd(-amp,amp):0, dy = amp? rnd(-amp,amp)*0.7:0;
+    const rr = amp? rnd(-amp,amp)*0.045:0;
+    let rot = rr;
+    if(spin.active){
+      const p = clamp((now-spin.start)/spin.dur,0,1);
+      const e = p<0.5 ? 4*p*p*p : 1-Math.pow(-2*p+2,3)/2;
+      rot += e*360*spin.turns;
+      if(p>=1) spin.active=false;
+    }
+    zoom.v += (zoom.to-zoom.v)*clamp((now-(loop._last||now))/1000*zoom.speed*60/60,0,1);
+    loop._last=now;
+
+    world.style.transform = `translate3d(${dx}px,${dy}px,0) rotate(${rot}deg)`;
+    scareWrap.style.transform = `translate3d(${-dx*0.55}px,${-dy*0.55}px,0) rotate(${rot*0.28}deg)`;
+    face.style.transform = `scale(${zoom.v.toFixed(3)}) translate3d(${dx*-0.3}px,${dy*-0.25}px,0) rotate(${rnd(-1.1,1.1)}deg)`;
+
+    // فیلترها
+    const flick = 1 + Math.random()*0.5;
+    const phase = Math.floor(t*3)%4;
+    face.style.filter =
+      `contrast(${(1.5*flick).toFixed(2)}) saturate(${(1.7+Math.random()*0.9).toFixed(2)}) ` +
+      `hue-rotate(${(phase*7+Math.random()*16).toFixed(0)}deg) brightness(${(0.85+Math.random()*0.7).toFixed(2)})`;
+    if(now<invertEnd) face.style.filter += ` invert(${Math.random()>0.5?1:0})`;
+
+    // فلاش‌ها
+    flash.style.opacity = now<strobeEnd ? (Math.random()>0.52 ? (0.35+Math.random()*0.55).toFixed(2) : 0) : 0;
+    redflash.style.opacity = (strobeEnd>now? 0.15:0) + (Math.random()<0.14 ? 0.35 : 0);
+    vig.style.opacity = clamp(0.35 + Math.random()*0.5, 0, 1);
+    staticEl.style.opacity = 0.16 + Math.random()*0.4;
+    staticEl.style.backgroundPosition = `${Math.random()*100}% ${Math.random()*100}%`;
+
+    raf=requestAnimationFrame(loop);
+  }
+
+  /* ---------- اجرای جامپ‌اسکر ---------- */
+  function showFace(which){ face.src = (which===2? FACES.f2 : FACES.f1); }
+
+  function startScare(){
+    extra = $('#optExtra').checked;
+    loopMode = $('#optLoop').checked;
+    audioWake();
+    show('none');
+    try{ $('#volHud').classList.remove('on'); }catch(e){}
+    scareWrap.classList.add('on');
+    scareOn = true; t0 = performance.now(); loop._last=t0;
+    document.title = "😱 ورررررررررین!!!!!!!!";
+    const A = ()=>ctx.currentTime + 0.02;   // «حالا»
+    const at = (ms)=>A() + ms/1000;
+
+    db(extra? 2.9 : 2.3);
+    shake(extra?140:80, 2400);
+    strobe(extra?2600:1600);
+    vibrateScare();
+
+    // ===== 0s: ضربه‌ی اول =====
+    showFace(1);
+    zoom={v:1.15,to:1.28,speed:4};
+    sfxImpact(at(0), {freq:100, amp:1});
+    sfxScream(at(0), 1.9, extra?640:560);
+    sfxScreech(at(0), 1.4);
+
+    // ===== 1.2s: زوم نزدیک + جیغ دوم =====
+    setTimeout(()=>{ if(!scareOn) return; zoomTo(2.35, 5); shake(extra?170:100, 1200); sfxScream(A(),1.2,760); sfxImpact(A(),{freq:74,amp:0.9}); }, 1200);
+
+    // ===== 2.4s: لرزش شدید + خنده =====
+    setTimeout(()=>{ if(!scareOn) return; zoomTo(1.05,6); shake(extra?200:120, 1500); strobe(1400); invert(520);
+      sfxLaugh(A(),10); sfxImpact(A(),{freq:60,amp:1, dur:1.6}); }, 2400);
+
+    // ===== 3.6s: چهره‌ی دوم + غرش =====
+    setTimeout(()=>{ if(!scareOn) return; showFace(2); zoom={v:1.7,to:1.35,speed:5}; strobe(1800); redflash.style.opacity=0.5;
+      sfxGrowl(A(),2.6, extra?55:66); sfxImpact(A(),{freq:120,amp:1,dur:1.4}); sfxScreech(A(),1.6); }, 3600);
+
+    // ===== 5.4s: زوم تا آخر + هارمونیک =====
+    setTimeout(()=>{ if(!scareOn) return; zoomTo(2.8,6); shake(extra?220:130,1600); invert(400);
+      sfxScream(A(),1.1,880); sfxWhisper(A(),2.4); }, 5400);
+
+    // ===== 6.8s: چرخش دیوانه‌کننده =====
+    setTimeout(()=>{ if(!scareOn) return; showFace(1); spinGo(2400, 3); zoomTo(1.1,7); strobe(1500);
+      sfxImpact(A(),{freq:85,amp:1}); sfxLaugh(A(),7); }, 6800);
+
+    // ===== 9.2s: سکوتِ مرگ‌آور (بدون هیچ صدا و حرکت) =====
+    setTimeout(()=>{ if(!scareOn) return;
+      face.style.opacity='0'; scareWrap.style.background='#000';   // سیاهی مطلق
+      freeze = true;
+      try{ if(comp) comp.threshold.value=-100; }catch(e){}
+      db(1);
+    }, 9200);
+
+    // ===== 10.1s: ضربه‌ی نهایی (بلندترین) =====
+    setTimeout(()=>{ if(!scareOn) return;
+      try{ comp.threshold.value=-3; }catch(e){}
+      db(extra? 3.3 : 2.6);
+      freeze = false;
+      showFace(2); face.style.opacity='1';
+      zoom={v:1.05,to:2.6,speed:8};
+      shake(extra?260:170, 2200); strobe(extra?2200:1500); invert(700);
+      sfxImpact(A(),{freq:70,amp:1,dur:1.8}); sfxScream(A(),2.2,480); sfxGrowl(A(),2.2,58);
+      buzz([0,700,120,700,120,1500,80,300,80,2500]);
+    }, 10100);
+
+    // ===== 12.6s: پایان و آرام شدن =====
+    setTimeout(()=>{ if(!scareOn) return;
+      zoomTo(1.0,1.2); strobe(500);
+      sfxBell(A()); sfxWhisper(A(),3.2); sfxBeat(A(),6,0.5);
+    }, 12600);
+
+    // ===== 15s: ورود به صفحه‌ی پایان =====
+    setTimeout(()=>{ if(!scareOn) return; endScare(); }, 15000);
+  }
+
+  function vibrateScare(){
+    const big = [0,900,120,650,100,1200,90,1800];
+    const extraP = [0,1200,150,900,120,1500,100,300,100,2200];
+    buzz(extra? extraP : big);
+    setTimeout(()=>buzz([0,600,140,900,120,1400]), 3600);
+    setTimeout(()=>buzz([0,1400,90,400,90,2200]), 6800);
+  }
+
+  function endScare(){
+    scareOn=false; freeze=false;
+    if(raf) cancelAnimationFrame(raf), raf=null;
+    scareWrap.classList.remove('on');
+    face.style.opacity='0'; face.style.filter='none';
+    world.style.transform='none'; scareWrap.style.transform='none';
+    flash.style.opacity=0; redflash.style.opacity=0; vig.style.opacity=0; staticEl.style.opacity=0;
+    scareWrap.style.background='#000';
+    document.title = "😈 تموم شد… خب حالا چی؟";
+    try{ comp.threshold.value=-3; }catch(e){}
+    db(1);
+
+    // شمارش قربانی‌ها
+    try{
+      const k='jumpscare_victims';
+      victimNo = (parseInt(localStorage.getItem(k)||'0',10)||0) + 1;
+      localStorage.setItem(k, String(victimNo));
+    }catch(e){ victimNo=1; }
+    $('#errCount').textContent = `شناسهٔ قربانی: #${String(victimNo).padStart(4,'0')}  —  تعداد افرادی که با این فایل ترسیدن: ${victimNo}`;
+    $('#stats').innerHTML = `قربانی شمارهٔ <b>#${String(victimNo).padStart(4,'0')}</b> این فایل تو بودی 😈<br><span class="pill">برای فرستادن به دوست: فایل <b>jumpscare.html</b> رو بفرست و بگو توی مرورگر بازش کنه</span>`;
+
+    show('after');
+    // پنجره‌ی خطای مسخره + دکمه‌ی بستنِ فراری
+    setTimeout(()=>{ $('#errDlg').classList.add('shakey'); }, 500);
+    setTimeout(()=>{ $('#ending').style.display='block'; }, 4200);
+  }
+
+  /* ---------- مرحله‌ی کیوت ---------- */
+  function volHudGo(){
+    const hud=$('#volHud'), f=$('#vfill'), n=$('#vnum');
+    hud.classList.add('on'); f.style.width='0%'; n.textContent='0%';
+    const start=performance.now(), dur=2500;
+    (function step(now){
+      const p=clamp((now-start)/dur,0,1);
+      f.style.width=Math.round(p*100)+'%';
+      n.textContent=Math.round(p*100)+'%';
+      if(p<1){ requestAnimationFrame(step); }
+      else { hud.classList.add('max'); n.textContent='100%'; }
+    })(start);
+  }
+
+  function loadFlow(msg, done){
+    show('load');
+    volHudGo();
+    const fill=$('#barFill'), m=$('#loadMsg');
+    const msgs = [
+      'جعبه رو باز می‌کنم... 🎀',
+      'یهو چی دیدم 😳',
+      'صدا رو زیاد کن... 🔊',
+      'آماده‌ای؟ 🙈',
+      '۳ ...',
+      '۲ ...',
+      '۱ ...'
+    ];
+    let p=0, i=0;
+    m.textContent = msg || msgs[0];
+    const iv = setInterval(()=>{
+      p += rnd(4,13);
+      fill.style.width = Math.min(100,p)+'%';
+      if(p> i*14 && i<msgs.length-1){ i++; m.textContent=msgs[i]; }
+      if(p>=100){ clearInterval(iv); setTimeout(done, 320); }
+    }, 250);
+  }
+
+  /* ---------- دکمه‌ها ---------- */
+  let tries=0;
+  const DODGES = ['نه، این رمز نیست! 🙈','ای بابا... یه بار دیگه 💔','نزدیک بود! ولی نه 😅','این یکی رو هم قبول نمی‌کنم 😌','آخرین شانس! 🙃'];
+  function wrong(){
+    const inp=$('#pw'), card=$('#cuteCard');
+    inp.classList.remove('shakey'); void inp.offsetWidth; inp.classList.add('shakey'); card.classList.add('shakey');
+    setTimeout(()=>card.classList.remove('shakey'), 450);
+    toast(DODGES[Math.min(tries, DODGES.length-1)]); tries++;
+    inp.value='';
+    audioWake();
+    if(tries>=5){ toast('بسه دیگه 😭 بیا خودم برات بازش می‌کنم...', 2000); setTimeout(loadFlow, 1500); }
+  }
+  $('#tryBtn').addEventListener('click', (e)=>{
+    e.preventDefault(); audioWake(); goFullscreen();
+    const v = ($('#pw').value||'').trim();
+    if(!v){ toast('اول یه چیزی بنویس 😊'); return; }
+    wrong();
+  });
+  $('#pw').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); $('#tryBtn').click(); } });
+  $('#forgotBtn').addEventListener('click', ()=>{ audioWake(); goFullscreen(); toast('نگران نباش، خودم بازش می‌کنم 🎀',1400); setTimeout(loadFlow, 1100); });
+
+  $('#againBtn').addEventListener('click', ()=>{ audioWake(); goFullscreen(); loadFlow('دوباره آماده‌ش می‌کنم... 😈', startScare); });
+  $('#enoughBtn').addEventListener('click', ()=>{
+    scareOn=false; freeze=false; if(raf) cancelAnimationFrame(raf);
+    db(0.5);                       // آرومش کن، ولی خاموش نکن تا بتونی دوباره بازی کنی
+    toast('باشه، خداحافظ 🎀 خوش گذشت؟', 2600);
+    document.title='🎀 خداحافظ! 🎀';
+  });
+  $('#shareBtn').addEventListener('click', async ()=>{
+    const txt = 'این فایل رو توی مرورگر (گوشی یا کامپیوتر) باز کن... ولی هشدار: صدا رو زیاد کن 😈🎀';
+    const url = location.href;
+    try{ await navigator.clipboard.writeText(url); toast('لینک کپی شد ✅ حالا بفرستش 😈',2400); }
+    catch(e){ toast(txt, 3600); }
+  });
+
+  // دکمهٔ بستنِ فراری در پنجرهٔ خطا
+  (function dodgeButton(){
+    const b=$('#closeX'); let n=0;
+    const dodge=()=>{
+      n++;
+      const x = rnd(-90,90), y = rnd(-70,70);
+      b.style.left = x+'px'; b.style.top = y+'px';
+      b.style.transform = `rotate(${rnd(-14,14)}deg)`;
+      toast(n===1 ? 'فکر کردی می‌تونی ببندی؟ 😈' : (n<4? 'نه نه نه... 😏' : 'باشه باشه، بگیر 🙃'), 1200);
+      if(n>=5){ b.style.left='0'; b.style.top='0'; b.style.transform='none'; }
+    };
+    b.addEventListener('mouseenter', ()=>{ if(n<5) dodge(); });
+    b.addEventListener('click', ()=>{ if(n>=5){ $('#errDlg').style.display='none'; $('#ending').style.display='block'; } else dodge(); });
+  })();
+
+  /* ---------- صفحه‌ی کیوت: قلب‌های شناور و برق‌ها ---------- */
+  (function decorate(){
+    const host=$('#screen-cute'), glyphs=['🎀','💖','🌸','🩷','💗','🦄','🍭','✨','🧸','💕'];
+    for(let i=0;i<18;i++){
+      const d=document.createElement('div'); d.className='floater';
+      d.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
+      d.style.left = rnd(2,92)+'vw';
+      d.style.fontSize = rnd(20,44)+'px';
+      d.style.animationDuration = rnd(11,22)+'s';
+      d.style.animationDelay = rnd(-16,0)+'s';
+      host.appendChild(d);
+    }
+    for(let i=0;i<12;i++){
+      const s=document.createElement('div'); s.className='sparkle'; s.textContent='✨';
+      s.style.left=rnd(3,95)+'vw'; s.style.top=rnd(4,92)+'vh';
+      s.style.animationDelay=rnd(0,2.4)+'s';
+      host.appendChild(s);
+    }
+  })();
+
+  /* ---------- آماده‌سازی: فول‌اسکرین، بیدارباش، قفل چرخش ---------- */
+  function goFullscreen(){
+    const el = document.documentElement;
+    const fn = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+    if(fn && !document.fullscreenElement){ try{ fn.call(el, {navigationUI:'hide'}); }catch(e){ try{fn.call(el);}catch(_){} } }
+    try{ screen.orientation && screen.orientation.lock && screen.orientation.lock('portrait').catch(()=>{}); }catch(e){}
+    try{ navigator.wakeLock && navigator.wakeLock.request('screen').catch(()=>{}); }catch(e){}
+  }
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && scareOn){ e.preventDefault(); } });
+
+  // اولین لمس = آماده‌سازی صدا (سیاست مرورگرها)
+  ['pointerdown','touchstart','keydown','click'].forEach(ev=>{
+    window.addEventListener(ev, ()=>audioWake(), { once:false, passive:true });
+  });
+  // پیش‌بارگذاری تصاویر ترسناک
+  [FACES.f1, FACES.f2].forEach(src=>{ const i=new Image(); i.src=src; });
+
+  console.log('%c🎀 هدیه‌ی کیوت ','background:#ffb7d5;color:#7a2b52;padding:6px 12px;border-radius:8px;font-weight:bold', 'صدا رو زیاد کن و دکمه رو بزن...');
+})();
+</script>
+</body>
+</html>
