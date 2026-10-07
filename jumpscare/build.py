@@ -1,22 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-جامپ‌اسکر رو از قالب می‌سازه و دو خروجی می‌ده:
+جامپ‌اسکر رو از قالب می‌سازه و خروجی‌ها رو توی پوشهٔ docs/ می‌ریزه
+(پوشهٔ docs همان چیزی است که GitHub Pages از آن سایت می‌سازد).
 
-  1) jumpscare/jumpscare.html            -> نسخهٔ پوشه‌ای (تصاویر به صورت فایل جدا)
-  2) jumpscare/dist/jumpscare-single.html -> نسخهٔ تک‌فایل (تصاویر به صورت base64 داخل خودش)
+خروجی‌ها:
+  docs/index.html               -> نسخهٔ آنلاین (آدرس سایت: https://aliam664.github.io/shat/)
+  docs/assets/*.jpg             -> تصاویر همان نسخه
+  docs/jumpscare-single.html    -> نسخهٔ تک‌فایل (هم برای دانلود از همان سایت، هم برای فرستادن در چت)
 
 اجرا:  python3 jumpscare/build.py
 """
 import base64
 import io
 import os
+import shutil
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
 TPL = os.path.join(HERE, "src", "template.html")
 ASSETS = os.path.join(HERE, "assets")
-DIST = os.path.join(HERE, "dist")
+DOCS = os.path.join(ROOT, "docs")
 
 FACES = {
     "{{FACE1}}": ("scare_face.jpg", "scare_face.png"),
@@ -30,13 +35,13 @@ def read(path):
 
 
 def write(path, text):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     with io.open(path, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(text)
     return path
 
 
 def pick(*names):
-    """اولین فایل موجود از بین نام‌ها."""
     for n in names:
         p = os.path.join(ASSETS, n)
         if os.path.exists(p):
@@ -45,10 +50,13 @@ def pick(*names):
 
 
 def data_uri(path):
-    name = os.path.basename(path).lower()
-    mime = "image/png" if name.endswith(".png") else "image/jpeg"
+    mime = "image/png" if path.lower().endswith(".png") else "image/jpeg"
     with open(path, "rb") as fh:
         return "data:%s;base64,%s" % (mime, base64.b64encode(fh.read()).decode("ascii"))
+
+
+def kb(path):
+    return os.path.getsize(path) / 1024.0
 
 
 def main():
@@ -56,30 +64,30 @@ def main():
         raise SystemExit("قالب پیدا نشد: %s" % TPL)
 
     tpl = read(TPL)
-    os.makedirs(DIST, exist_ok=True)
+    os.makedirs(os.path.join(DOCS, "assets"), exist_ok=True)
 
-    # ---- خروجی ۱: نسخهٔ پوشه‌ای (سبک‌تر، برای باز کردن روی کامپیوتر) ----
-    folder = tpl
+    # ---- خروجی ۱: صفحهٔ آنلاین (تصاویر به صورت فایل جدا) ----
+    online = tpl
     for token, names in FACES.items():
-        path = pick(*names)
-        folder = folder.replace(token, "assets/" + os.path.basename(path))
-    out1 = write(os.path.join(HERE, "jumpscare.html"), folder)
+        src = pick(*names)
+        dst = os.path.join(DOCS, "assets", os.path.basename(src))
+        shutil.copyfile(src, dst)
+        online = online.replace(token, "assets/" + os.path.basename(src))
+    out_online = write(os.path.join(DOCS, "index.html"), online)
 
-    # ---- خروجی ۲: نسخهٔ تک‌فایل (برای فرستادن در واتساپ/تلگرام) ----
+    # ---- خروجی ۲: تک‌فایل (تصاویر داخل خودش، برای چت و آفلاین) ----
     single = tpl
-    sizes = {}
     for token, names in FACES.items():
-        path = pick(*names)
-        sizes[token] = os.path.getsize(path)
-        single = single.replace(token, data_uri(path))
-    out2 = write(os.path.join(DIST, "jumpscare-single.html"), single)
+        single = single.replace(token, data_uri(pick(*names)))
+    out_single = write(os.path.join(DOCS, "jumpscare-single.html"), single)
 
     print("ساخته شد:")
-    for p in (out1, out2):
-        print("  %-62s %8.0f KB" % (os.path.relpath(p, os.path.dirname(HERE)), os.path.getsize(p) / 1024.0))
-    leftovers = [t for t in FACES if t in folder or t in single]
-    if leftovers:
-        print("قالب‌جای‌گیرنشده:", leftovers, file=sys.stderr)
+    for p in (out_online, out_single):
+        print("  %-46s %8.0f KB" % (os.path.relpath(p, ROOT), kb(p)))
+
+    bad = [t for t in FACES if t in online or t in single]
+    if bad:
+        print("قالب‌جای‌گیر‌نشده:", bad, file=sys.stderr)
         return 1
     return 0
 
